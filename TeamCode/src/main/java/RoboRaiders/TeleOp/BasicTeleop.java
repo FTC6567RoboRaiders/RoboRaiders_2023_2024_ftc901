@@ -249,13 +249,16 @@ public class BasicTeleop extends OpMode {
     }
 
     public void doDeposit() {
-        if(armMotorEncoder >= targetArmMotorEncoder){
-            robot.armMotor.setPower(0.0);
 
-        }
-        else {
-            robot.armMotor.setPower(0.5 * rStickX);
-        }
+        robot.armMotor.setPower(0.5*rStickX);
+//
+//        if(armMotorEncoder >= targetArmMotorEncoder){
+//            robot.armMotor.setPower(0.0);
+//
+//        }
+//        else {
+//            robot.armMotor.setPower(0.5 * rStickX);
+//        }
 
         if(xButton) {
             robot.adjustBucketPosition(1.0);
