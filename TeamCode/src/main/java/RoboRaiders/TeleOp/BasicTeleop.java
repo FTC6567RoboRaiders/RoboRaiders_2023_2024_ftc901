@@ -228,13 +228,12 @@ public class BasicTeleop extends OpMode {
     }
 
     public void doDroneLaunch() {
-        while(endGame == true) {
-            if (bButton && lBumper) {
-                robot.fireDroneTrigger(0.0);
-            }
-
-            else {}
+        if (endGame && bButton && lBumper) {
+            robot.fireDroneTrigger(0.0);
         }
+
+        else {}
+
     }
 
     public void doDeposit() {
