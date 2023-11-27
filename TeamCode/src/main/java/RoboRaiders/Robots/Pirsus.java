@@ -1,10 +1,12 @@
 package RoboRaiders.Robots;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -34,13 +36,19 @@ public class Pirsus {
     public Servo bucketPositioner = null;
     public Servo entrapmentServo = null;
 
-    public BNO055IMU imu;
+    public IMU imu;
 
     /* Local OpMode Members */
     public HardwareMap hwMap = null;
 
     /* Public Variables */
-    public BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    public IMU.Parameters parameters = new IMU.Parameters(
+            new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)
+    );
+
+//    public BNO055IMU.Parameters parameters = new BNO055IMU.Parameters(
+//            new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)
+//    );
     public Orientation angles;
     public double integratedZAxis;
     public double iza_lastHeading = 0.0;
@@ -94,9 +102,9 @@ public class Pirsus {
 
         // defines the directions the motors will spin
         lFMotor.setDirection(DcMotor.Direction.FORWARD);
-        rFMotor.setDirection(DcMotor.Direction.FORWARD);
-        lRMotor.setDirection(DcMotor.Direction.REVERSE);
-        rRMotor.setDirection(DcMotor.Direction.FORWARD);
+        rFMotor.setDirection(DcMotor.Direction.REVERSE);
+        lRMotor.setDirection(DcMotor.Direction.FORWARD);
+        rRMotor.setDirection(DcMotor.Direction.REVERSE);
 
         rIntakeMotor.setDirection(DcMotor.Direction.FORWARD);
         lIntakeMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -137,8 +145,8 @@ public class Pirsus {
 
 
         // Define and initialize sensors
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        imu = hwMap.get(IMU.class, "imu");
+//        parameters.angleUnit = IMU.AngleUnit.RADIANS;
         //parameters.mode = BNO055IMU.SensorMode.IMU;
         imu.initialize(parameters);
 
@@ -360,9 +368,9 @@ public class Pirsus {
 
         float heading;
 
-//        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); //this sets up the how we want the IMU to report data
-        //       heading = Math.abs(angles.firstAngle); //heading is equal to the absolute value of the first angle
-        heading = -imu.getAngularOrientation().firstAngle;
+        angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); // this sets up the how we want the IMU to report data
+        heading = Math.abs(angles.firstAngle); // heading is equal to the absolute value of the first angle
+//        heading = Math.abs(imu.getRobotOrientation().firstAngle);
 
         return heading;
     }
@@ -384,7 +392,7 @@ public class Pirsus {
     public double getIntegratedZAxis() {
 
         // This sets up the how we want the IMU to report data
-        iza_angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        iza_angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         // Obtain the heading (Z-Axis)
         iza_newHeading = iza_angles.firstAngle;

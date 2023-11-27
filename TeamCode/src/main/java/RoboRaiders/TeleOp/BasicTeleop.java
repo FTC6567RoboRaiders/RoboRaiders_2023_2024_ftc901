@@ -3,6 +3,7 @@ package RoboRaiders.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import RoboRaiders.Robots.Pirsus;
 import RoboRaiders.Utilities.Logger.Logger;
@@ -116,10 +117,7 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("| Gamepad2 B button:      ", "drone safety off         |");
         telemetry.addData("| Gamepad2 left bumper:   ", "fire drone               |");
         telemetry.addData("+-------------------------", "-------------------------+");
-        telemetry.addData("endgame", String.valueOf(endGame));
-        telemetry.addData("timer", String.valueOf((elapsedTime / 1000000000)));
-        telemetry.addData("b button", String.valueOf(bButton));
-        telemetry.addData("left bumper", String.valueOf(lBumper));
+        telemetry.addData("botheading", String.valueOf(robot.getHeading()));
 
         elapsedTime = System.nanoTime() - startTime;
         if((elapsedTime / 1000000000) >= 90) {
@@ -152,25 +150,37 @@ public class BasicTeleop extends OpMode {
     public void doDrive() {
         // double autoHeading = RoboRaidersProperties.getHeading();
         // read inverse IMU heading, as the IMU heading is CW positive
+//
+//
+//        double botHeading = robot.getHeading();
+//
+//        double y = gamepad1.left_stick_y; // Remember, this is reversed!`
+//        double x = gamepad1.left_stick_x; // Counteract imperfect strafing
+//        double rx = gamepad1.right_stick_x;
+//
+//        double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
+//        double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
+//
+//        // denominator is the largest motor power (absolute value) or 1
+//        // this ensures all the powers maintain the same ratio, but only when
+//        // at least one is out of the range [-1, 1]
+//        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+//        double frontLeftPower = (rotY + rotX + rx) / denominator;
+//        double backLeftPower = (rotY - rotX + rx) / denominator;
+//        double frontRightPower = (rotY - rotX - rx) / denominator;
+//        double backRightPower = (rotY + rotX - rx) / denominator;
 
-        double botHeading = robot.getHeading();
+        // Drive Train motor processing
 
-        double y = gamepad1.left_stick_y; // Remember, this is reversed!`
-        double x = gamepad1.left_stick_x; // Counteract imperfect strafing
-        double rx = gamepad1.right_stick_x;
+        double backLeftPower = -gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x;    // These lines establish the joystick input values as
+        double backRightPower = -gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x;   // the float variables "backLeft", "backRight", "frontLeft", and "frontRight", which
+        double frontLeftPower = -gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x;   //correspond to the back left, back right, front left,
+        double frontRightPower = -gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x;  // and front right wheels of the robot.
 
-        double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
-        double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
-
-        // denominator is the largest motor power (absolute value) or 1
-        // this ensures all the powers maintain the same ratio, but only when
-        // at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
-        double frontRightPower = (rotY - rotX - rx) / denominator;
-        double backRightPower = (rotY + rotX - rx) / denominator;
-
+        backLeftPower = -Range.clip(backLeftPower, -1, 1);     // These lines clip the extreme ends of the joystick input
+        backRightPower = -Range.clip(backRightPower, -1, 1);   // values in the resulting floats to avoid exceeding
+        frontLeftPower = -Range.clip(frontLeftPower, -1, 1);   // values accepted by the program.
+        frontRightPower = -Range.clip(frontRightPower, -1, 1);
 
 //        telemetry.addLine("Variables");
 //        telemetry.addData("botHeading", String.valueOf(botHeading));
@@ -204,10 +214,10 @@ public class BasicTeleop extends OpMode {
 
 
         robot.setDriveMotorPower(
-                frontLeftPower*0.45,
-                frontRightPower*0.45,
-                backLeftPower*0.45,
-                backRightPower*0.45
+                frontLeftPower*0.75,
+                frontRightPower*0.75,
+                backLeftPower*0.75,
+                backRightPower*0.75
         );
         //               dtLogger);
     }
