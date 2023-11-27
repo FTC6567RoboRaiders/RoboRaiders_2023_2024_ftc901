@@ -42,9 +42,9 @@ public class BasicTeleop extends OpMode {
     public double leftStickY;
 
     //Timer
-    public ElapsedTime droneTimer;
+    public long startTime;
+    public long elapsedTime;
     public boolean endGame = false;  //This checks whether we have elapsed enough time to be in endgame
-    public double eGString;
 
     public int armMotorEncoder;
     public int targetArmMotorEncoder;
@@ -63,8 +63,8 @@ public class BasicTeleop extends OpMode {
     public void start() {
 
         //Timer for drone launch safety
-        droneTimer = new ElapsedTime();
-        droneTimer.reset();
+        startTime = System.nanoTime();
+
 
     }
 
@@ -117,12 +117,12 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("| Gamepad2 left bumper:   ", "fire drone               |");
         telemetry.addData("+-------------------------", "-------------------------+");
         telemetry.addData("endgame", String.valueOf(endGame));
-        telemetry.addData("timer", String.valueOf(droneTimer.seconds()));
+        telemetry.addData("timer", String.valueOf((System.nanoTime() / 1000000000)));
         telemetry.addData("b button", String.valueOf(bButton));
         telemetry.addData("left bumper", String.valueOf(lBumper));
 
-
-        if(droneTimer.seconds() >= 90.0){
+        elapsedTime = System.nanoTime() - startTime;
+        if((elapsedTime / 1000000000) >= 90) {
             endGame = true;
         }
 
