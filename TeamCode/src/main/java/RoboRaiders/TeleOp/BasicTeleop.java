@@ -117,7 +117,7 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("| Gamepad2 left bumper:   ", "fire drone               |");
         telemetry.addData("+-------------------------", "-------------------------+");
         telemetry.addData("endgame", String.valueOf(endGame));
-        telemetry.addData("timer", String.valueOf((System.nanoTime() / 1000000000)));
+        telemetry.addData("timer", String.valueOf((elapsedTime / 1000000000)));
         telemetry.addData("b button", String.valueOf(bButton));
         telemetry.addData("left bumper", String.valueOf(lBumper));
 
@@ -125,6 +125,8 @@ public class BasicTeleop extends OpMode {
         if((elapsedTime / 1000000000) >= 90) {
             endGame = true;
         }
+
+        endGame = true;
 
 
         // The following lines of code added by Steeeve
