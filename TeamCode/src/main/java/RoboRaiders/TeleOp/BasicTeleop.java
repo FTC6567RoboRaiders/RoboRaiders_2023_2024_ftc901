@@ -120,6 +120,7 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("botheading", String.valueOf(robot.getHeading()));
         telemetry.addData("rStickX", String.valueOf(rStickX));
 
+
         elapsedTime = System.nanoTime() - startTime;
         if((elapsedTime / 1000000000) >= 90) {
             endGame = true;
@@ -251,7 +252,7 @@ public class BasicTeleop extends OpMode {
 
     public void doDeposit() {
 
-        robot.setArmMotorPower(.5*rStickX);
+        robot.setArmMotorPower(rStickX);
 //        robot.armMotor.setPower(0.5*rStickX);
 //
 //        if(armMotorEncoder >= targetArmMotorEncoder){
@@ -263,11 +264,15 @@ public class BasicTeleop extends OpMode {
 //        }
 
         if(xButton) {
-            robot.adjustBucketPosition(1.0);
+            robot.adjustBucketPosition(0.6);
+            telemetry.addData("0.6 Position Attempted", "----------------------");
             robot.resetArmMotorEncoders();
         }
+
         else if(yButton) {
-            robot.adjustBucketPosition(0.5);
+
+            robot.adjustBucketPosition(0.8);
+            telemetry.addData("0.8 Position Attempted", "----------------------");
         }
     }
 
