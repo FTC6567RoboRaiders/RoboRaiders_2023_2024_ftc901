@@ -186,10 +186,10 @@ public class BasicTeleop extends OpMode {
         double frontLeftPower = gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x;   //correspond to the back left, back right, front left,
         double frontRightPower = gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x;  // and front right wheels of the robot.
 
-        backLeftPower = -Range.clip(backLeftPower, -1, 1);     // These lines clip the extreme ends of the joystick input
-        backRightPower = -Range.clip(backRightPower, -1, 1);   // values in the resulting floats to avoid exceeding
-        frontLeftPower = -Range.clip(frontLeftPower, -1, 1);   // values accepted by the program.
-        frontRightPower = -Range.clip(frontRightPower, -1, 1);
+        backLeftPower = Range.clip(backLeftPower, -1, 1);     // These lines clip the extreme ends of the joystick input
+        backRightPower = Range.clip(backRightPower, -1, 1);   // values in the resulting floats to avoid exceeding
+        frontLeftPower = Range.clip(frontLeftPower, -1, 1);   // values accepted by the program.
+        frontRightPower = Range.clip(frontRightPower, -1, 1);
 
 //        telemetry.addLine("Variables");
 //        telemetry.addData("botHeading", String.valueOf(botHeading));
