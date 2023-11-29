@@ -38,6 +38,8 @@ public class BasicTeleop extends OpMode {
     public boolean xButton;
     public double rStickY;
     public double rStickX;
+    public boolean dpadDown;
+    public boolean dpadUp;
 
     // lift
     public double leftStickY;
@@ -50,6 +52,7 @@ public class BasicTeleop extends OpMode {
     public int armMotorEncoder;
     public int targetArmMotorEncoder;
 
+
     @Override
     public void init() {
 
@@ -58,6 +61,7 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("Robot Initialized waiting your command", true);
         telemetry.update();
         robot.fireDroneTrigger(0.3);
+
     }
 
     @Override
@@ -91,6 +95,9 @@ public class BasicTeleop extends OpMode {
         xButton = gamepad2.x;
         rStickY = gamepad2.right_stick_y;
         rStickX = gamepad2.right_stick_x;
+
+        dpadDown = gamepad2.dpad_down;
+        dpadUp = gamepad2.dpad_up;
 
 
         // lift
@@ -246,13 +253,18 @@ public class BasicTeleop extends OpMode {
             robot.fireDroneTrigger(0.0);
         }
 
-        else {}
 
     }
 
     public void doDeposit() {
+        if(dpadDown){
+            robot.bucketDoorClose();
+        }
+        if(dpadUp){
+            robot.bucketDoorOpen();
+        }
 
-        robot.setArmMotorPower(rStickX);
+        robot.setArmMotorPower(0.6785 * rStickY);
 //        robot.armMotor.setPower(0.5*rStickX);
 //
 //        if(armMotorEncoder >= targetArmMotorEncoder){
@@ -264,15 +276,15 @@ public class BasicTeleop extends OpMode {
 //        }
 
         if(xButton) {
-            robot.adjustBucketPosition(0.6);
+            robot.adjustBucketPosition(0.59);
             telemetry.addData("0.6 Position Attempted", "----------------------");
-            robot.resetArmMotorEncoders();
+           // robot.resetArmMotorEncoders();
         }
 
         else if(yButton) {
 
-            robot.adjustBucketPosition(0.8);
-            telemetry.addData("0.8 Position Attempted", "----------------------");
+            robot.adjustBucketPosition(0.72);
+            telemetry.addData("0.72 Position Attempted", "----------------------");
         }
     }
 

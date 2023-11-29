@@ -34,7 +34,8 @@ public class Pirsus {
 
     public DcMotorEx armMotor = null;
     public Servo bucketPositioner = null;
-    public Servo entrapmentServo = null;
+    public Servo bucketDoorServo = null;
+
 
     public IMU imu;
 
@@ -94,7 +95,7 @@ public class Pirsus {
         // intake motor and servos
         armMotor = hwMap.get(DcMotorEx.class, "armMotor");
         bucketPositioner = hwMap.get(Servo.class, "bucketPositioner");
-        entrapmentServo = hwMap.get(Servo.class, "entrapmentServo");
+        bucketDoorServo = hwMap.get(Servo.class, "bucketDoorServo");
 
         // lift servo
         liftMotor = hwMap.get(DcMotorEx.class, "liftMotor");
@@ -148,6 +149,8 @@ public class Pirsus {
         lIntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        bucketDoorOpen();
 
 
         // Define and initialize sensors
@@ -481,6 +484,13 @@ public class Pirsus {
 
     public void liftStop() {
         liftMotor.setPower(0);
+    }
+
+    public void bucketDoorOpen() {
+        bucketDoorServo.setPosition(1.0);
+    }
+    public void bucketDoorClose() {
+        bucketDoorServo.setPosition(0.0);
     }
 
 
