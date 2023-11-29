@@ -117,6 +117,8 @@ public class Pirsus {
         rIntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lIntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         //have the motors on the drivetrain break here.
         // Set all motors to zero power
@@ -127,6 +129,8 @@ public class Pirsus {
 
         rIntakeMotor.setPower(0.0);
         lIntakeMotor.setPower(0.0);
+
+        armMotor.setPower(0.0);
 
 
         // Stop and reset encoders
@@ -142,6 +146,8 @@ public class Pirsus {
 
         rIntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lIntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Define and initialize sensors
@@ -206,6 +212,14 @@ public class Pirsus {
             lclLogger.Debug("************* TestRobot Set Drive Motor Power TestRobot Set Drive Motor Power **********");
         }
 
+    }
+
+    /**
+     * Setting Power for the arm motor on robot
+     * @param power
+     */
+    public void setArmMotorPower(double power){
+        armMotor.setPower(power);
     }
 
 
@@ -468,6 +482,8 @@ public class Pirsus {
     public void liftStop() {
         liftMotor.setPower(0);
     }
+
+
 
     //**********************************************************************************************
     //

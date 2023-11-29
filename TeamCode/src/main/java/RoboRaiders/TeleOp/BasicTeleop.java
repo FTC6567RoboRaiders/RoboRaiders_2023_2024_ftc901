@@ -118,6 +118,7 @@ public class BasicTeleop extends OpMode {
         telemetry.addData("| Gamepad2 left bumper:   ", "fire drone               |");
         telemetry.addData("+-------------------------", "-------------------------+");
         telemetry.addData("botheading", String.valueOf(robot.getHeading()));
+        telemetry.addData("rStickX", String.valueOf(rStickX));
 
         elapsedTime = System.nanoTime() - startTime;
         if((elapsedTime / 1000000000) >= 90) {
@@ -250,7 +251,8 @@ public class BasicTeleop extends OpMode {
 
     public void doDeposit() {
 
-        robot.armMotor.setPower(0.5*rStickX);
+        robot.setArmMotorPower(.5*rStickX);
+//        robot.armMotor.setPower(0.5*rStickX);
 //
 //        if(armMotorEncoder >= targetArmMotorEncoder){
 //            robot.armMotor.setPower(0.0);
