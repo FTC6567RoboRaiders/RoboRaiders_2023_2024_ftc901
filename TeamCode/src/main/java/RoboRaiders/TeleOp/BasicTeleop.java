@@ -133,7 +133,6 @@ public class BasicTeleop extends OpMode {
             endGame = true;
         }
 
-        endGame = true;
 
 
         // The following lines of code added by Steeeve
@@ -190,6 +189,13 @@ public class BasicTeleop extends OpMode {
         backRightPower = Range.clip(backRightPower, -1, 1);   // values in the resulting floats to avoid exceeding
         frontLeftPower = Range.clip(frontLeftPower, -1, 1);   // values accepted by the program.
         frontRightPower = Range.clip(frontRightPower, -1, 1);
+
+        telemetry.addData("backLeftPower", String.valueOf(backLeftPower));
+        telemetry.addData("backRightPower", String.valueOf(backRightPower));
+        telemetry.addData("frontLeftPower", String.valueOf(frontLeftPower));
+        telemetry.addData("frontRightPower", String.valueOf(frontRightPower));
+
+
 
 //        telemetry.addLine("Variables");
 //        telemetry.addData("botHeading", String.valueOf(botHeading));
@@ -277,8 +283,7 @@ public class BasicTeleop extends OpMode {
 
         if(xButton) {
             robot.adjustBucketPosition(0.59);
-            telemetry.addData("0.6 Position Attempted", "----------------------");
-           // robot.resetArmMotorEncoders();
+            // robot.resetArmMotorEncoders();
         }
 
         else if(yButton) {
@@ -289,15 +294,10 @@ public class BasicTeleop extends OpMode {
     }
 
     public void doLiftRobot() {
-        if(leftStickY > 0.0){
-            robot.liftUp();
-        }
-        else if(leftStickY < 0.0){
-            robot.liftDown();
-        }
-
-        else {
-            robot.liftStop();
+        if (endGame) {
+            if (leftStickY > 0.0)      robot.liftUp();
+            else if (leftStickY < 0.0) robot.liftDown();
+            else                       robot.liftStop();
         }
     }
 

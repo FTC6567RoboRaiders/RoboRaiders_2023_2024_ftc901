@@ -23,7 +23,7 @@ public class DriveTrainEncoderStrafeTest extends LinearOpMode {
             // Initialize and set up the robot's drive motors
             robot.initialize(hardwareMap);             // Initialize the robot
             robot.resetEncoders();                     // Reset the encoder counts
-            robot.runWithEncoders();                   // Tell the motors to run with encoders
+            robot.runWithoutEncoders();                   // Tell the motors to run with encoders
 
             telemetry.addData("Status ", "Initialized");
             telemetry.update();

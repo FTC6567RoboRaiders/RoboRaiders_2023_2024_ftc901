@@ -220,8 +220,7 @@ public class GripPipelineRed {
 	 * @param inputContours The contours on which to perform the operation.
 	 * @param outputContours The contours where the output will be stored.
 	 */
-	private void convexHulls(List<MatOfPoint> inputContours,
-							 ArrayList<MatOfPoint> outputContours) {
+	private void convexHulls(List<MatOfPoint> inputContours, ArrayList<MatOfPoint> outputContours) {
 		final MatOfInt hull = new MatOfInt();
 		outputContours.clear();
 		for (int i = 0; i < inputContours.size(); i++) {
