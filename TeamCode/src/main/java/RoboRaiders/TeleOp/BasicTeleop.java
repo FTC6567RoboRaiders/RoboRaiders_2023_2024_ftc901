@@ -266,7 +266,7 @@ public class BasicTeleop extends OpMode {
 
         robot.setArmMotorPower(0.6785 * rStickY);
 //        robot.armMotor.setPower(0.5*rStickX);
-//
+
 //        if(armMotorEncoder >= targetArmMotorEncoder){
 //            robot.armMotor.setPower(0.0);
 //
