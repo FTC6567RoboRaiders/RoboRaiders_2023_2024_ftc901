@@ -483,7 +483,7 @@ public class Pirsus {
     }
 
     public void liftStop() {
-        liftMotor.setPower(0);
+        liftMotor.setPower(0.0);
     }
 
     public void bucketDoorOpen() {
