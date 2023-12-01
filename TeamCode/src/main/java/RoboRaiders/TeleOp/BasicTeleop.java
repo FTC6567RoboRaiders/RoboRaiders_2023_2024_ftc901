@@ -156,8 +156,8 @@ public class BasicTeleop extends OpMode {
 
 
     public void doDrive() {
-        // double autoHeading = RoboRaidersProperties.getHeading();
-        // read inverse IMU heading, as the IMU heading is CW positive
+////         double autoHeading = RoboRaidersProperties.getHeading();
+////         read inverse IMU heading, as the IMU heading is CW positive
 //
 //
 //        double botHeading = robot.getHeading();
@@ -180,10 +180,10 @@ public class BasicTeleop extends OpMode {
 
         // Drive Train motor processing
 
-        double backLeftPower = gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x;    // These lines establish the joystick input values as
-        double backRightPower = gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x;   // the float variables "backLeft", "backRight", "frontLeft", and "frontRight", which
-        double frontLeftPower = gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x;   //correspond to the back left, back right, front left,
-        double frontRightPower = gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x;  // and front right wheels of the robot.
+        double backLeftPower = gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x;    // These lines establish the joystick input values as   |   originally negative
+        double backRightPower = gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x;   // the float variables "backLeft", "backRight", "frontLeft", and "frontRight", which   |   originally positive
+        double frontLeftPower = gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x;   //correspond to the back left, back right, front left,   |   originally positive
+        double frontRightPower = gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x;  // and front right wheels of the robot.   |   originally negative
 
         backLeftPower = Range.clip(backLeftPower, -1, 1);     // These lines clip the extreme ends of the joystick input
         backRightPower = Range.clip(backRightPower, -1, 1);   // values in the resulting floats to avoid exceeding

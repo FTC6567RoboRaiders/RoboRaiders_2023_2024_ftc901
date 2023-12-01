@@ -1,6 +1,7 @@
 package RoboRaiders.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import RoboRaiders.Robots.Pirsus;
@@ -15,12 +16,23 @@ import RoboRaiders.Robots.Pirsus;
  * Change Id      Person          Date          Comments
  * SMK1           Steeeve Kocik   231130        Initial version
  */
-public class PutTheLiftDownTeleop extends LinearOpMode {
+public class PutTheLiftDownTeleop extends OpMode {
 
     public Pirsus robot = new Pirsus();
 
     @Override
-    public void runOpMode() {
+    public void init() {
+
+        // initialise robot and tell user that the robot is initialized
+        robot.initialize(hardwareMap);
+        telemetry.addData("Robot Initialized waiting your command", true);
+        telemetry.update();
+
+
+    }
+
+    @Override
+    public void loop() {
 
         double leftStickY = gamepad2.left_stick_y;
 
