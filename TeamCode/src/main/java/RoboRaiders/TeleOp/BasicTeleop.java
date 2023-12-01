@@ -270,7 +270,7 @@ public class BasicTeleop extends OpMode {
             robot.bucketDoorOpen();
         }
 
-        robot.setArmMotorPower(0.6785 * rStickY);
+        robot.setArmMotorPower(0.8 * rStickY);
 //        robot.armMotor.setPower(0.5*rStickX);
 
 //        if(armMotorEncoder >= targetArmMotorEncoder){
